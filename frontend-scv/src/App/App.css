@@ -1,0 +1,18 @@
+@import '~antd/dist/antd.css';
+
+.page-header-container {
+  padding: 0px !important;
+}
+
+.Visible
+{
+  visibility: visible;
+}
+
+.Invisible {
+  visibility: hidden;
+}
+
+p a, span a {
+  color: blue;
+}
