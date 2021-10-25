@@ -6,8 +6,7 @@ import AppRoute from './Routes/AppRoute';
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  useQuery
+  ApolloProvider
 } from "@apollo/client";
 const { App, Routes } = ApplicationRoutes;
 

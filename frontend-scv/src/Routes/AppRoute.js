@@ -1,8 +1,6 @@
 import React, { Suspense } from "react";
 import Loading from '../Loading/LoadingIndicator';
-import { Route, Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router';
-import { useApolloClient } from "@apollo/client";
+import { Route } from 'react-router-dom';
 
 const AppRoute = ({exact, path, component, isPrivate, key}) => {
 

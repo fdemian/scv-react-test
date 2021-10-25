@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
-import { Menu, Row, Col, Drawer } from 'antd';
+import { Menu, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUserPlus as signUp,
-  faSignInAlt as signIn
-} from '@fortawesome/free-solid-svg-icons';
-import './Navbar.css';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import './Navbar.css';
 
 const Navbar = ({ mobile, blogName }) => {
 
