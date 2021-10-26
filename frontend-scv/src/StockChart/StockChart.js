@@ -1,30 +1,31 @@
 import React from 'react';
 import { Pie } from '@ant-design/charts';
+import './Chart.css';
 
 const valor = 75001;
 const data = [
   {
-    type: '分类一',
+    type: 'A',
     value: 27,
   },
   {
-    type: '分类二',
+    type: 'AAA',
     value: 25,
   },
   {
-    type: '分类三',
+    type: 'AAAB',
     value: 18,
   },
   {
-    type: '分类四',
+    type: 'AAAAL',
     value: 15,
   },
   {
-    type: '分类五',
+    type: 'AAAXXXX',
     value: 10,
   },
   {
-    type: '其他',
+    type: 'AWEE',
     value: 5,
   },
 ];
@@ -39,6 +40,7 @@ const config = {
     labelHeight: 28,
     content: '{name}\n{percentage}',
   },
+  locale:'en-US',
   interactions: [{ type: 'element-selected' }, { type: 'element-active' }],
 };
 
@@ -46,7 +48,7 @@ const config = {
 const DemoPie = () => {
   return(
   <>
-    <h1>Valor total de cartera ${valor}</h1>
+    <h1 className="pie-chart-text">Valor total de cartera ${valor}</h1>
     <Pie {...config} />
   </>
   );

@@ -1,8 +1,15 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
-import { Statistic, Row, Col, Card, Input, Space, Button } from 'antd';
+import {
+  Statistic,
+  Row,
+  Col,
+  Card,
+  Input,
+  Button
+} from 'antd';
 
-const Bond = () => {
+const StockDetail = ({}) => {
   return (
     <Row className="dashboard-row-container">
       <Col span={12} gutter={2}>
@@ -55,15 +62,15 @@ const Bond = () => {
             <Input addonAfter={<Button type="link">Vender</Button>} />
             <Statistic title="Valor a vender" value="AR$2000000" />
           </Card>
-
       </Col>
     </Row>
   );
 }
 
 /*
-Bond.propTypes = {
+StockDetail.propTypes = {
   : PropTypes.
-};*/
+};
+*/
 
-export default Bond;
+export default StockDetail;
