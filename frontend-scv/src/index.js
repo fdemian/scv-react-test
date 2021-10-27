@@ -39,10 +39,11 @@ const SCVTest = () => {
 
 }
 
+  //<React.StrictMode>
+  //</React.StrictMode>
 ReactDOM.render(
-  <React.StrictMode>
      <SCVTest />
-  </React.StrictMode>,
+  ,
   document.getElementById('root')
 );
 

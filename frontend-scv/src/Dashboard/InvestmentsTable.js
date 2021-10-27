@@ -11,29 +11,19 @@ const columns = [
   {
     title: 'Precio',
     dataIndex: 'price',
+    render: text => `U$S ${text}`
   }
 ];
 
-const data = [
-  {
-    key: '1',
-    stock: 'Alibaba',
-    price: '￥300,000.00',
-  },
-  {
-    key: '2',
-    stock: 'Coca Cola',
-    price: 'U$D 300,000.00',
-  },
-  {
-    key: '3',
-    stock: 'La Serenísima',
-    price: 'AR$ 300,000.00',
-  },
-];
-
-const InvestmentsTable = () => {
-  return <Table columns={columns} dataSource={data} bordered pagination={false} />;
+const InvestmentsTable = ({ data }) => {
+  return (
+  <Table
+     columns={columns}
+     dataSource={data}
+     ordered
+     pagination={false}
+  />
+  );
 }
 
 /*

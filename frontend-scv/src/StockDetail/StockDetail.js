@@ -9,61 +9,37 @@ import {
   Button
 } from 'antd';
 
-const StockDetail = ({}) => {
+
+const StockDetail = () => {
   return (
-    <Row className="dashboard-row-container">
-      <Col span={12} gutter={2}>
-        <Card
-           title="Mis inversiones"
-           bordered={true}
-           style={{ width: 300 }}
-         >
-          <p>Card content</p>
-          <p>Card content</p>
-          <p>Card content</p>
+  <>
+    <h1 style={{textAlign: 'center'}}>Acciones de Coca-Cola</h1>
+    <br />
+    <Row>
+      <Col span={24}>
+        <Card title="Valores">
+           <Statistic title="Cantidad" value="200 Unidades" />
+           <Statistic title="Cotización" value="AR$200/Unidad" />
+           <Statistic title="Valor Actual" value="AR$40000" />
         </Card>
-        <br />
-        <Card
-           title="Otras inversiones"
-           bordered={true}
-           style={{ width: 300 }}
-         >
-           <p>Card content</p>
-           <p>Card content</p>
-        </Card>
-      </Col>
-      <Col span={12} gutter={2}>
-          <h1>Acciones de Coca-Cola</h1>
-
-          <Card
-             title="Valores"
-             bordered={true}
-             style={{ width: 300 }}
-           >
-             <Statistic title="Cantidad" value="200 Unidades" />
-             <Statistic title="Cotización" value="AR$200/Unidad" />
-             <Statistic title="Valor Actual" value="AR$40000" />
-          </Card>
-
-          <Card
-             title="Comprar"
-             bordered={true}
-             style={{ width: 300 }}
-           >
-              <Input addonAfter={<Button type="link">Comprar</Button>} />
-              <Statistic title="Valor a comprar" value="AR$2000000" />
-          </Card>
-          <br />
-          <Card
-             title="Vender"
-             bordered={true}
-             style={{ width: 300 }}
-           >
-            <Input addonAfter={<Button type="link">Vender</Button>} />
-            <Statistic title="Valor a vender" value="AR$2000000" />
-          </Card>
       </Col>
     </Row>
+    <br />
+    <Row gutter={16}>
+      <Col span={12}>
+        <Card title="Comprar" bordered={true}>
+            <Input addonAfter={<Button type="link">Comprar</Button>} />
+            <Statistic title="Valor a comprar" value="AR$2000000" />
+        </Card>
+      </Col>
+      <Col span={12}>
+        <Card title="Vender" bordered={true}>
+          <Input addonAfter={<Button type="link">Vender</Button>} />
+          <Statistic title="Valor a vender" value="AR$2000000" />
+        </Card>
+      </Col>
+    </Row>
+  </>
   );
 }
 
