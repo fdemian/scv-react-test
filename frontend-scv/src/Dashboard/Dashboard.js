@@ -3,6 +3,7 @@ import React from 'react';
 import { Card } from 'antd';
 import StockChart from '../StockChart/StockChart';
 import InvestmentsTable from './InvestmentsTable';
+import UserInvestments from './UserInvestments';
 import Loading from '../Loading/LoadingIndicator';
 import { Row, Col } from 'antd';
 import './Dashboard.css';
@@ -10,8 +11,8 @@ import { GET_USER, GET_STOCKS, GET_USER_STOCKS } from './Queries';
 import { useQuery } from '@apollo/client';
 
 const getAvailableStocks = (userStocks, stocks) => {
-  const userStockIds = userStocks.map(s => s.id);
-  const otherStocks = stocks.filter(s => s.id !== userStockIds);
+  const userStockIds = userStocks.map(s => s.stock.id);
+  const otherStocks = stocks.filter(s => !userStockIds.includes(s.id));
   return otherStocks;
 }
 
@@ -35,7 +36,7 @@ const Dashboard = () => {
     </h2>
     );
 
-  const user = userQuery.data.getUser;
+  //const user = userQuery.data.getUser;
   const stocks = stocksQuery.data.getStocks;
   const userStocks = userStocksQuery.data.getUserStocks;
   const availableStocks = getAvailableStocks(userStocks, stocks);
@@ -47,7 +48,7 @@ const Dashboard = () => {
       <Col span={12}>
         <Card
            title="Mis inversiones" bordered={true}>
-          <InvestmentsTable stocks={userStocks} />
+          <UserInvestments stocks={userStocks} />
         </Card>
       </Col>
       <Col span={12}>

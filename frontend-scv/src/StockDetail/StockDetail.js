@@ -14,6 +14,7 @@ import { BUY_STOCK, SELL_STOCK } from './Mutations';
 import { GET_STOCK_DETAIL } from './Queries';
 import { useParams } from "react-router-dom";
 import { getUserId } from '../utils';
+import { Redirect } from 'react-router-dom';
 import Loading from '../Loading/LoadingIndicator';
 
 const StockDetail = () => {
@@ -29,8 +30,8 @@ const StockDetail = () => {
     }
   });
 
-  const [buyMutation] = useMutation(BUY_STOCK);
-  const [sellMutation] = useMutation(SELL_STOCK);
+  const [buyMutation, buyMutationResult] = useMutation(BUY_STOCK);
+  const [sellMutation, sellMutationResult] = useMutation(SELL_STOCK);
 
   const buyStock = () => {
     const userId = getUserId();
@@ -42,17 +43,17 @@ const StockDetail = () => {
         description: 'Debe especificar una cantidad a comprar positiva mayor que 0.',
         placement: 'topRight',
       });
-
       return;
     }
 
-    console.log({
+    buyMutation({
       variables: {
         user: userId,
         stock: stockId,
         amount: amountToBuy
       }
     });
+
   }
 
   const sellStock = () => {
@@ -69,21 +70,33 @@ const StockDetail = () => {
       return;
     }
 
-    console.log({
+    sellMutation({
       variables: {
         user: userId,
         stock: stockId,
         amount: amountToSell
       }
     });
+
   }
 
-  if(loading)
+  if(loading || buyMutationResult.loading || sellMutationResult.loading)
     return <Loading />;
 
   if(error)
     return <p>Error</p>;
 
+  if(buyMutationResult.data || sellMutationResult.data) {
+    console.clear();
+    console.log(buyMutationResult);
+    console.log("----.-");
+
+    const buyResults = buyMutationResult.data ? buyMutationResult.data.buyMutation : null;
+    const sellResults = sellMutationResult.data ? sellMutationResult.data.sellMutation : null;
+
+    if((sellResults && sellResults.ok) || (buyResults && buyResults.ok))
+      return <Redirect to="/" />;
+  }
 
   const stockDetail = data.getStockDetail;
   const currentValue = stockDetail.quantity*stockDetail.stock.current_price;

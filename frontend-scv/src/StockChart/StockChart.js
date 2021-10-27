@@ -2,14 +2,17 @@ import React from 'react';
 import { Pie } from '@ant-design/charts';
 import './Chart.css';
 
-const DemoPie = ({ stocks }) => {
-  let valor = 0;
-  let newData = [];
+const StockChart = ({ stocks }) => {
 
-  if(stocks.length !== 0) {
-    valor = stocks.map(d => d.stock.price).reduce((a, b)=> a+b);
-    newData = stocks.map(s => ({ type: s.stock.name, value: s.stock.price }));
-  }
+  if(stocks.length === 0)
+    return (
+    <>
+      <h1 className="pie-chart-text">Aún no tenes acciones en tu portfolio.</h1>
+    </>
+  );
+
+  const totalValue = stocks.map(d => d.stock.current_price).reduce((a, b)=> a+b);
+  const newData = stocks.map(s => ({ type: s.stock.name, value: (totalValue/s.stock.current_price) }));
 
   const config = {
     appendPadding: 10,
@@ -28,10 +31,10 @@ const DemoPie = ({ stocks }) => {
 
   return(
   <>
-    <h1 className="pie-chart-text">Valor total de cartera U$S {valor}</h1>
+    <h1 className="pie-chart-text">Valor total de cartera U$S {totalValue}</h1>
     <Pie {...config} />
   </>
   );
 };
 
-export default DemoPie;
+export default StockChart;

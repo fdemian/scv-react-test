@@ -4,17 +4,17 @@ import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 
 const InvestmentsTable = ({ stocks }) => {
-  
+
   const columns = [
     {
       title: 'Accion',
-      dataIndex: 'name',
-      render: (text, val) => (<Link to={`/stocks/${val.id}`}>{text}</Link>)
+      dataIndex: '',
+      render: (text, val) => (<Link to={`/stocks/${val.stock.id}`}>{val.stock.name}</Link>)
     },
     {
       title: 'Precio',
-      dataIndex: 'current_price',
-      render: text => `U$S ${text}`
+      dataIndex: '',
+      render: (text, val) => (`U$S ${val.stock.current_price}`)
     }
   ];
 
