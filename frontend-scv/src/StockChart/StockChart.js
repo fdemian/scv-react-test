@@ -2,10 +2,14 @@ import React from 'react';
 import { Pie } from '@ant-design/charts';
 import './Chart.css';
 
-const DemoPie = ({ data }) => {
-  
-  const valor = data.map(d => d.price).reduce((a, b)=> a+b);
-  const newData = data.map(s => ({ type: s.stock, value: s.price }));
+const DemoPie = ({ stocks }) => {
+  let valor = 0;
+  let newData = [];
+
+  if(stocks.length !== 0) {
+    valor = stocks.map(d => d.stock.price).reduce((a, b)=> a+b);
+    newData = stocks.map(s => ({ type: s.stock.name, value: s.stock.price }));
+  }
 
   const config = {
     appendPadding: 10,

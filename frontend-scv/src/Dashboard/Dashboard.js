@@ -9,47 +9,11 @@ import './Dashboard.css';
 import { GET_USER, GET_STOCKS, GET_USER_STOCKS } from './Queries';
 import { useQuery } from '@apollo/client';
 
-const data = [
-  {
-    key: '1',
-    id: 1,
-    stock: 'Alibaba',
-    price: 200000,
-  },
-  {
-    key: '2',
-    id: 2,
-    stock: 'Coca Cola',
-    price:  300000,
-  },
-  {
-    key: '3',
-    id: 3,
-    stock: 'La Serenísima',
-    price: 100000,
-  },
-];
-
-const otrasInv = [
-  {
-    key: '1',
-    id: 1,
-    stock: 'Contoso LTD.',
-    price: 200000,
-  },
-  {
-    key: '2',
-    id: 2,
-    stock: 'Apple, Inc.',
-    price:  300000,
-  },
-  {
-    key: '3',
-    id: 3,
-    stock: 'Lenovo',
-    price: 100000,
-  },
-];
+const getAvailableStocks = (userStocks, stocks) => {
+  const userStockIds = userStocks.map(s => s.id);
+  const otherStocks = stocks.filter(s => s.id !== userStockIds);
+  return otherStocks;
+}
 
 const Dashboard = () => {
 
@@ -74,10 +38,8 @@ const Dashboard = () => {
   const user = userQuery.data.getUser;
   const stocks = stocksQuery.data.getStocks;
   const userStocks = userStocksQuery.data.getUserStocks;
+  const availableStocks = getAvailableStocks(userStocks, stocks);
 
-  console.clear();
-  console.log(userStocks);
-  console.log("::::::");
 
   return (
   <>
@@ -85,17 +47,17 @@ const Dashboard = () => {
       <Col span={12}>
         <Card
            title="Mis inversiones" bordered={true}>
-          <InvestmentsTable data={data} />
+          <InvestmentsTable stocks={userStocks} />
         </Card>
       </Col>
       <Col span={12}>
-         <StockChart stocks={stocks} data={data} />
+         <StockChart stocks={userStocks} />
       </Col>
     </Row>
     <Row>
       <Col span={12}>
         <Card title="Otras inversiones" bordered={true}>
-            <InvestmentsTable stocks={stocks} />
+            <InvestmentsTable stocks={availableStocks} />
         </Card>
       </Col>
     </Row>

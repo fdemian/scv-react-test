@@ -10,15 +10,16 @@ type User {
   savings: Int!
 }
 
-type UserStocks {
-  stock: Stock!
+type UserStock {
+  stock: Stock
   quantity: Int!
 }
 
 type Query {
  getUser(id:Int!): User
  getStocks: [Stock!]
- getUserStocks(id:Int!): [UserStocks!]
+ getUserStocks(id:Int!): [UserStock!]
+ getStockDetail(user:Int!, stock:Int!): UserStock
 }
 
 type MutationSuccessType {
