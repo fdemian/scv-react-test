@@ -7,7 +7,7 @@ const columns = [
   {
     title: 'Accion',
     dataIndex: 'name',
-    render: (text, val) => (<Link href={`/stocks/${val.id}`}>{text}</Link>)
+    render: (text, val) => (<Link to={`/stocks/${val.id}`}>{text}</Link>)
   },
   {
     title: 'Precio',
@@ -23,6 +23,9 @@ const InvestmentsTable = ({ stocks }) => {
      dataSource={stocks}
      ordered
      pagination={false}
+     locale={{
+       emptyText: "No hay inversiones para mostrar."
+     }}
   />
   );
 }

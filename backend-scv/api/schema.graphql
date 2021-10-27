@@ -1,16 +1,22 @@
-type User {
-  id: Int!
-  username: String!
-  savings: Int!
-}
-
 type Stock {
   id: Int!
   name: String!
   current_price: Int!
 }
 
+type User {
+  id: Int!
+  username: String!
+  savings: Int!
+}
+
+type UserStocks {
+  stock: Stock!
+  quantity: Int!
+}
+
 type Query {
  getUser(id:Int!): User
  getStocks: [Stock!]
+ getUserStocks(id:Int!): [UserStocks!]
 }

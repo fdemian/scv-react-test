@@ -19,3 +19,16 @@ export const GET_STOCKS = gql`
     }
   }
 `;
+
+export const GET_USER_STOCKS = gql`
+  query GetStocks($id: Int!) {
+    getUserStocks(id: $id) {
+      stock {
+        id
+        name
+        current_price
+      }
+      quantity
+    }
+  }
+`;

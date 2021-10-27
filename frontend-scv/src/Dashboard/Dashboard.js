@@ -6,7 +6,7 @@ import InvestmentsTable from './InvestmentsTable';
 import Loading from '../Loading/LoadingIndicator';
 import { Row, Col } from 'antd';
 import './Dashboard.css';
-import { GET_USER, GET_STOCKS } from './Queries';
+import { GET_USER, GET_STOCKS, GET_USER_STOCKS } from './Queries';
 import { useQuery } from '@apollo/client';
 
 const data = [
@@ -57,26 +57,26 @@ const Dashboard = () => {
     variables: { id: 1 }
   });
   const stocksQuery = useQuery(GET_STOCKS);
+  const userStocksQuery = useQuery(GET_USER_STOCKS, {
+    variables: { id: 1 }
+  });
 
-  if(userQuery.loading || stocksQuery.loading)
+  if(userQuery.loading || stocksQuery.loading || userStocksQuery.loading)
     return <Loading />;
 
-  if(userQuery.error || stocksQuery.error)
+  if(userQuery.error || stocksQuery.error || userStocksQuery.error)
     return (
     <h2>
       Hubo un error con una o mas de las consultas a nuestra base de datos
     </h2>
     );
 
-  if(!userQuery.data && !stocksQuery.data)
-    return null;
-
   const user = userQuery.data.getUser;
   const stocks = stocksQuery.data.getStocks;
+  const userStocks = userStocksQuery.data.getUserStocks;
 
   console.clear();
-  console.log(user);
-  console.log(stocks);
+  console.log(userStocks);
   console.log("::::::");
 
   return (
@@ -89,7 +89,7 @@ const Dashboard = () => {
         </Card>
       </Col>
       <Col span={12}>
-         <StockChart data={data} />
+         <StockChart stocks={stocks} data={data} />
       </Col>
     </Row>
     <Row>
