@@ -41,7 +41,6 @@ const Dashboard = () => {
   const userStocks = userStocksQuery.data.getUserStocks;
   const availableStocks = getAvailableStocks(userStocks, stocks);
 
-
   return (
   <>
     <Row>

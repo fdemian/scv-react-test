@@ -11,8 +11,8 @@ const StockChart = ({ stocks }) => {
     </>
   );
 
-  const totalValue = stocks.map(d => d.stock.current_price).reduce((a, b)=> a+b);
-  const newData = stocks.map(s => ({ type: s.stock.name, value: (totalValue/s.stock.current_price) }));
+  const totalValue = stocks.map(d => (d.stock.current_price*d.quantity)).reduce((a, b)=> a+b);
+  const newData = stocks.map(s => ({ type: s.stock.name, value: ((s.stock.current_price*s.quantity)/totalValue) }));
 
   const config = {
     appendPadding: 10,

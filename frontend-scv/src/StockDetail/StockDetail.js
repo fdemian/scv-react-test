@@ -87,14 +87,10 @@ const StockDetail = () => {
     return <p>Error</p>;
 
   if(buyMutationResult.data || sellMutationResult.data) {
-    console.clear();
-    console.log(buyMutationResult);
-    console.log("----.-");
+    const buyOk = buyMutationResult.data ? buyMutationResult.data.buyStock.ok : null;
+    const sellOk = sellMutationResult.data ? sellMutationResult.data.sellStock.ok : null;
 
-    const buyResults = buyMutationResult.data ? buyMutationResult.data.buyMutation : null;
-    const sellResults = sellMutationResult.data ? sellMutationResult.data.sellMutation : null;
-
-    if((sellResults && sellResults.ok) || (buyResults && buyResults.ok))
+    if(buyOk || sellOk)
       return <Redirect to="/" />;
   }
 

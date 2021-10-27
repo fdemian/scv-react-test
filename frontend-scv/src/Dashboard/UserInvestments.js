@@ -15,6 +15,10 @@ const InvestmentsTable = ({ stocks }) => {
       title: 'Precio',
       dataIndex: '',
       render: (text, val) => (`U$S ${val.stock.current_price}`)
+    },
+    {
+      title: 'Cantidad Comprada',
+      dataIndex: 'quantity'
     }
   ];
 
