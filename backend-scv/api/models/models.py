@@ -24,7 +24,7 @@ class User(Base):
     savings = Column(Integer, nullable=False)
 
     # Stocks
-    stocks = relationship("Stock", back_populates='user')
+    #stocks = relationship("Stock")
 
 class Stock(Base):
     __tablename__ = 'stocks'
@@ -34,6 +34,7 @@ class Stock(Base):
 
 class UserStocks(Base):
     __tablename__ = 'user_stocks'
+    id = Column(Integer, primary_key=True, nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     stock_id = Column(Integer, ForeignKey('stocks.id'), nullable=False)
     quantity = Column(Integer, nullable=False)

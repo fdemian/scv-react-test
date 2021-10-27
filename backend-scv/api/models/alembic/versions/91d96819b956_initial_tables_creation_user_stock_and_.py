@@ -33,6 +33,7 @@ def upgrade():
 
     op.create_table(
       'user_stocks',
+      sa.Column('id', sa.Integer, primary_key=True, nullable=False),
       sa.Column('user_id', sa.Integer, sa.ForeignKey('users.id'), nullable=False),
       sa.Column('stock_id', sa.Integer, sa.ForeignKey('stocks.id'), nullable=False),
       sa.Column('quantity', sa.Integer, nullable=False)

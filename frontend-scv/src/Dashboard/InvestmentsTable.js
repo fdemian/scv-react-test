@@ -1,25 +1,26 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
 import { Table } from 'antd';
+import { Link } from 'react-router-dom';
 
 const columns = [
   {
     title: 'Accion',
-    dataIndex: 'stock',
-    render: text => <a href="/stocks/1">{text}</a>,
+    dataIndex: 'name',
+    render: (text, val) => (<Link href={`/stocks/${val.id}`}>{text}</Link>)
   },
   {
     title: 'Precio',
-    dataIndex: 'price',
+    dataIndex: 'current_price',
     render: text => `U$S ${text}`
   }
 ];
 
-const InvestmentsTable = ({ data }) => {
+const InvestmentsTable = ({ stocks }) => {
   return (
   <Table
      columns={columns}
-     dataSource={data}
+     dataSource={stocks}
      ordered
      pagination={false}
   />

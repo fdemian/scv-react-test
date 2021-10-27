@@ -18,7 +18,7 @@ const App = (props) => {
 
    <Helmet>
       <meta charset="utf-8" />
-      <meta name="description" content="" />
+      <meta name="description" content="Description." />
       <title>SCV Test</title>
     </Helmet>
 

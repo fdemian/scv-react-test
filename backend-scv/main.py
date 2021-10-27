@@ -6,7 +6,7 @@ from os import path
 
 app = Flask(__name__)
 
-@app.route("/graphql", methods=["POST"])
+@app.route("/api/graphql", methods=["POST"])
 def graphql_server():
    if request.content_type.startswith("multipart/form-data"):
       data = combine_multipart_data(

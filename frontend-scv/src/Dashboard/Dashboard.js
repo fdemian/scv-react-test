@@ -3,8 +3,11 @@ import React from 'react';
 import { Card } from 'antd';
 import StockChart from '../StockChart/StockChart';
 import InvestmentsTable from './InvestmentsTable';
+import Loading from '../Loading/LoadingIndicator';
 import { Row, Col } from 'antd';
 import './Dashboard.css';
+import { GET_USER, GET_STOCKS } from './Queries';
+import { useQuery } from '@apollo/client';
 
 const data = [
   {
@@ -49,6 +52,33 @@ const otrasInv = [
 ];
 
 const Dashboard = () => {
+
+  const userQuery = useQuery(GET_USER, {
+    variables: { id: 1 }
+  });
+  const stocksQuery = useQuery(GET_STOCKS);
+
+  if(userQuery.loading || stocksQuery.loading)
+    return <Loading />;
+
+  if(userQuery.error || stocksQuery.error)
+    return (
+    <h2>
+      Hubo un error con una o mas de las consultas a nuestra base de datos
+    </h2>
+    );
+
+  if(!userQuery.data && !stocksQuery.data)
+    return null;
+
+  const user = userQuery.data.getUser;
+  const stocks = stocksQuery.data.getStocks;
+
+  console.clear();
+  console.log(user);
+  console.log(stocks);
+  console.log("::::::");
+
   return (
   <>
     <Row>
@@ -65,7 +95,7 @@ const Dashboard = () => {
     <Row>
       <Col span={12}>
         <Card title="Otras inversiones" bordered={true}>
-            <InvestmentsTable data={otrasInv} />
+            <InvestmentsTable stocks={stocks} />
         </Card>
       </Col>
     </Row>

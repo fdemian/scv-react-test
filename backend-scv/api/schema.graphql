@@ -1,0 +1,16 @@
+type User {
+  id: Int!
+  username: String!
+  savings: Int!
+}
+
+type Stock {
+  id: Int!
+  name: String!
+  current_price: Int!
+}
+
+type Query {
+ getUser(id:Int!): User
+ getStocks: [Stock!]
+}
