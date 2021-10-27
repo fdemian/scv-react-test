@@ -20,3 +20,13 @@ type Query {
  getStocks: [Stock!]
  getUserStocks(id:Int!): [UserStocks!]
 }
+
+type MutationSuccessType {
+   ok: Boolean!
+   message: String!
+}
+
+type Mutation {
+  buyStock(user:Int!, stock:Int!, amount:Int!): MutationSuccessType!
+  sellStock(user:Int!, stock:Int!, amount:Int!): MutationSuccessType!
+}
