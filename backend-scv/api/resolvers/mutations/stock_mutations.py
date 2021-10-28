@@ -2,6 +2,56 @@ from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from api.models.models import UserStocks, Stock, db_session
 from os import path
 
+def load_stock_value(_, info, name, price):
+    try:
+      stock_obj = db_session.query(Stock).filter(Stock.id == id).one_or_none()
+
+      if stock_obj is None:
+          stock = Stock()
+          stock.name = name
+          stock.current_price = price
+          db_session.add(stock)
+          db_session.commit()
+          return {
+            "ok": True,
+            "message": ""
+          }
+      else:
+          return {
+            "ok": False,
+            "message": "Stock already exists"
+          }
+    except:
+          return {
+            "ok": False,
+            "message": "Unknown server error."
+          }
+
+
+def update_stock_value(_, info, id, price):
+    try:
+      stock_obj = db_session.query(Stock).filter(Stock.id == id).one_or_none()
+
+      if stock_obj is None:
+          return {
+            "ok": False,
+            "message": "Stock does not exist."
+          }
+      else:
+          stock_obj.price = price
+          db_session.add(stock_obj)
+          db_session.commit()
+
+          return {
+            "ok": True,
+            "message": ""
+          }
+    except:
+          return {
+            "ok": False,
+            "message": "Unknown server error."
+          }
+
 def buy_stock(_, info, user, stock, amount):
         stock_obj = db_session.query(Stock).filter(Stock.id == stock).one_or_none()
         if stock_obj is None:

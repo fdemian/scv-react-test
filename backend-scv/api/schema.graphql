@@ -29,7 +29,14 @@ type MutationSuccessType {
    quantity: Int!
 }
 
+type LoadStockPayload {
+  ok: Boolean!
+  message: String!
+}
+
 type Mutation {
   buyStock(user:Int!, stock:Int!, amount:Int!): MutationSuccessType!
   sellStock(user:Int!, stock:Int!, amount:Int!): MutationSuccessType!
+  loadStockValue(name: String!, price: Int!): LoadStockPayload!
+  updateStockValue(id: Int!, price: Int!): LoadStockPayload!
 }
