@@ -7,7 +7,9 @@ def buy_stock(_, info, user, stock, amount):
         if stock_obj is None:
             return {
               'ok': False,
-              'message': "The stock you are trying to buy does not exist."
+              'message': "The stock you are trying to buy does not exist.",
+              'stockId': stock,
+              'quantity': amount
             }
         user_stock = db_session.query(UserStocks).filter(
           UserStocks.user_id == user,
@@ -17,7 +19,9 @@ def buy_stock(_, info, user, stock, amount):
             if amount <= 0:
                 return {
                   'ok': False,
-                  'message': "It is not possible to buy a negative amount."
+                  'message': "It is not possible to buy a negative amount.",
+                  'stockId': stock,
+                  'quantity': amount
                 }
             else:
                 new_stock = UserStocks()
@@ -28,7 +32,9 @@ def buy_stock(_, info, user, stock, amount):
                 db_session.commit()
                 return {
                  'ok': True,
-                 'message': ''
+                 'message': '',
+                 'stockId': stock,
+                 'quantity': amount
                 }
         else:
             user_stock.quantity = user_stock.quantity + amount
@@ -36,7 +42,9 @@ def buy_stock(_, info, user, stock, amount):
             db_session.commit()
             return {
              'ok': True,
-             'message': ''
+             'message': '',
+             'stockId': stock,
+             'quantity': amount
             }
 
 
@@ -46,7 +54,9 @@ def sell_stock(_, info, user, stock, amount):
         if stock_obj is None:
             return {
               'ok': False,
-              'message': "The stock you are trying to sell does not exist."
+              'message': "The stock you are trying to sell does not exist.",
+              'stockId': stock,
+              'quantity': amount
             }
 
         user_stock = db_session.query(UserStocks).filter(
@@ -57,24 +67,43 @@ def sell_stock(_, info, user, stock, amount):
         if user_stock is None:
             return {
               'ok': False,
-              'message': "You can't sell a stock you haven't bought."
+              'message': "You can't sell a stock you haven't bought.",
+              'stockId': stock,
+              'quantity': amount
             }
         else:
            if user_stock.quantity - amount < 0:
                return {
                  'ok': False,
-                 'message': "You can't sell an amount of stocks that leaves you with a negative balance."
+                 'message': "You can't sell an amount of stocks that leaves you with a negative balance.",
+                 'stockId': stock,
+                 'quantity': amount
                }
            else:
-               user_stock.quantity = user_stock.quantity - amount
-               db_session.add(user_stock)
-               db_session.commit()
-               return {
-                 'ok': True,
-                 'message': ""
-               }
-    except:
+               if user_stock.quantity - amount == 0:
+                   db_session.delete(user_stock)
+                   db_session.commit()
+                   return {
+                     'ok': True,
+                     'message': "",
+                     'stockId': stock,
+                     'quantity': amount
+                   }
+               else:
+                   user_stock.quantity = user_stock.quantity - amount
+                   db_session.add(user_stock)
+                   db_session.commit()
+                   return {
+                    'ok': True,
+                    'message': "",
+                    'stockId': stock,
+                    'quantity': amount
+                   }
+
+    except Exception as e:
         return {
           'ok': False,
-          'message': 'Unknown error'
+          'message': 'Unknown error',
+          'stockId': stock,
+          'quantity': amount
         }

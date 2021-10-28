@@ -5,6 +5,8 @@ export const BUY_STOCK = gql`
     buyStock(user: $user, stock: $stock, amount: $amount) {
       ok
       message
+      stockId
+      quantity
     }
   }
 `;
@@ -14,6 +16,8 @@ export const SELL_STOCK = gql`
     sellStock(user: $user, stock: $stock, amount: $amount) {
       ok
       message
+      stockId
+      quantity
     }
   }
 `;

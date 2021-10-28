@@ -30,8 +30,101 @@ const StockDetail = () => {
     }
   });
 
-  const [buyMutation, buyMutationResult] = useMutation(BUY_STOCK);
-  const [sellMutation, sellMutationResult] = useMutation(SELL_STOCK);
+
+  const [buyMutation, buyMutationResult] = useMutation(BUY_STOCK, {
+      update(
+        cache,
+        {
+          data: { buyStock }
+        }
+      ) {
+        cache.modify({
+          fields: {
+            getUserStocks(existingStock = []) {
+              const { stockId, quantity } = buyStock;
+              if(existingStock.indexOf(s => s.stock.id === stockId) !== -1){
+                const newStockArray = existingStock.map(e => {
+                  if(e.stock.id === stockId) {
+                    return {
+                      stock: {
+                        id: e.stock.id,
+                        name: e.stock.name,
+                        current_price: e.stock.current_price
+                      },
+                      quantity: e.quantity + quantity
+                    }
+                  }
+                  return e;
+                })
+
+                return newStockArray;
+              }
+              else {
+                let _stock = {
+                  quantity: quantity,
+                  stock: {
+                    id: data.getStockDetail.id,
+                    name: data.getStockDetail.name,
+                    current_price: data.getStockDetail.current_price
+                  }
+                };
+                return existingStock.concat(_stock);
+              }
+            }
+          }
+        });
+      }
+    }
+  );
+
+  const [sellMutation, sellMutationResult] = useMutation(SELL_STOCK, {
+      update(
+        cache,
+        {
+          data: { sellStock }
+        }
+      ) {
+        cache.modify({
+          fields: {
+            getUserStocks(existingStock = []) {
+              const { stockId, quantity } = sellStock;
+              const element = existingStock.find(s => s.stock.id === stockId);
+              if(element.quantity - quantity === 0){
+                // Remove element from user stocks.
+                return existingStock.filter(s => s.stock.id !== stockId);
+              }
+              else {
+                return existingStock.map(s => {
+                   console.clear();
+                   console.log({
+                     quantity: (s.quantity - quantity),
+                     stock: {
+                       id: s.stock.id,
+                       name: s.stock.name,
+                       current_price: s.stock.current_price
+                     }
+                   });
+                   console.log(":::::-->");
+                   if(s.stock.id === stockId){
+                    return {
+                      quantity: (s.quantity - quantity),
+                      stock: {
+                        id: s.stock.id,
+                        name: s.stock.name,
+                        current_price: s.stock.current_price
+                      }
+                    };
+                   }
+                   else {
+                     return s;
+                   }
+                })
+              }
+            }
+          }
+        });
+      }
+    });
 
   const buyStock = () => {
     const userId = getUserId();
@@ -51,6 +144,14 @@ const StockDetail = () => {
         user: userId,
         stock: stockId,
         amount: amountToBuy
+      },
+      optimisticResponse: {
+        buyStock:{
+          ok: true,
+          message: "",
+          stockId: stockId,
+          quantity: amountToBuy
+        }
       }
     });
 
@@ -75,6 +176,14 @@ const StockDetail = () => {
         user: userId,
         stock: stockId,
         amount: amountToSell
+      },
+      optimisticResponse: {
+        sellStock:{
+          ok: true,
+          message: "",
+          stockId: stockId,
+          quantity: amountToSell
+        }
       }
     });
 

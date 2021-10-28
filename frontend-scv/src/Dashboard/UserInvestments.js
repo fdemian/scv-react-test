@@ -12,13 +12,18 @@ const InvestmentsTable = ({ stocks }) => {
       render: (text, val) => (<Link to={`/stocks/${val.stock.id}`}>{val.stock.name}</Link>)
     },
     {
-      title: 'Precio',
+      title: 'Precio por unidad',
       dataIndex: '',
       render: (text, val) => (`U$S ${val.stock.current_price}`)
     },
     {
       title: 'Cantidad Comprada',
       dataIndex: 'quantity'
+    },
+    {
+      title: 'Total',
+      dataIndex: '',
+      render: (text, val) => (`U$S ${val.stock.current_price*val.quantity}`)
     }
   ];
 

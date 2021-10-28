@@ -25,6 +25,8 @@ type Query {
 type MutationSuccessType {
    ok: Boolean!
    message: String!
+   stockId: Int!
+   quantity: Int!
 }
 
 type Mutation {
