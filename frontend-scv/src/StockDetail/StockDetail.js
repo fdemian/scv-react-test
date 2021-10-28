@@ -40,6 +40,16 @@ const StockDetail = () => {
       ) {
         cache.modify({
           fields: {
+            getStockDetail() {
+              return {
+                quantity: data.getStockDetail.quantity + buyStock.quantity,
+                stock: {
+                  id: data.getStockDetail.id,
+                  name: data.getStockDetail.name,
+                  current_price: data.getStockDetail.current_price
+                }
+              }
+            },
             getUserStocks(existingStock = []) {
               const { stockId, quantity } = buyStock;
               if(existingStock.indexOf(s => s.stock.id === stockId) !== -1){
@@ -57,7 +67,7 @@ const StockDetail = () => {
                   return e;
                 })
 
-                return newStockArray;
+                return [].concat(newStockArray);
               }
               else {
                 let _stock = {
@@ -91,20 +101,11 @@ const StockDetail = () => {
               const element = existingStock.find(s => s.stock.id === stockId);
               if(element.quantity - quantity === 0){
                 // Remove element from user stocks.
-                return existingStock.filter(s => s.stock.id !== stockId);
+                return [].concat(existingStock.filter(s => s.stock.id !== stockId));
               }
               else {
-                return existingStock.map(s => {
-                   console.clear();
-                   console.log({
-                     quantity: (s.quantity - quantity),
-                     stock: {
-                       id: s.stock.id,
-                       name: s.stock.name,
-                       current_price: s.stock.current_price
-                     }
-                   });
-                   console.log(":::::-->");
+                return [].concat(existingStock.map(s => {
+
                    if(s.stock.id === stockId){
                     return {
                       quantity: (s.quantity - quantity),
@@ -118,7 +119,8 @@ const StockDetail = () => {
                    else {
                      return s;
                    }
-                })
+                }));
+
               }
             }
           }
@@ -223,7 +225,10 @@ const StockDetail = () => {
     <Row gutter={16}>
       <Col span={12}>
         <Card title="Comprar" bordered={true}>
-            <Input onChange={setAmountToBuy} min={0} />
+            <Input
+              onChange={setAmountToBuy}
+              min={0}
+            />
             <Button type="link" onClick={buyStock}>
             Comprar
             </Button>
@@ -235,8 +240,16 @@ const StockDetail = () => {
       </Col>
       <Col span={12}>
         <Card title="Vender" bordered={true}>
-          <Input onChange={setAmountToSell} min={0} />
-          <Button type="link" onClick={sellStock}>
+          <Input
+              disabled={stockDetail.quantity===0}
+              onChange={setAmountToSell}
+              min={0}
+            />
+          <Button
+              type="link"
+              onClick={sellStock}
+              disabled={stockDetail.quantity===0}
+          >
             Vender
           </Button>
           <Statistic
